@@ -148,7 +148,14 @@ namespace zmq
 
     inline int poll(std::vector<zmq_pollitem_t> const& items, long timeout_ = -1)
     {
-        return poll(items.data(), items.size(), timeout_);
+		if(items.empty())
+		{
+			return poll(NULL,items.size(),timeout_);
+		}
+		else
+		{
+			return poll(&items[0], items.size(), timeout_);
+		}
     }
 
 
